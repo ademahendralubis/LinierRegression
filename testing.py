@@ -16,8 +16,8 @@ if __name__ == "__main__":
         X, y, test_size=0.2, random_state=1234
     )
 
-    regressor = LinearRegression(learning_rate=0.01, n_iters=1000)
-    regressor.fit(X_train, y_train)
+    regressor = LinearRegression(X_train, y_train,learning_rate=0.01, n_iters=1000)
+    regressor.fit()
     predictions = regressor.predict(X_test)
 
     mse = mean_squared_error(y_test, predictions)

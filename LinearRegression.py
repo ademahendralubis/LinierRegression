@@ -1,14 +1,17 @@
 import numpy as np
 
 class LinearRegression:
-    def __init__(self, learning_rate=0.0001, n_iters=10000):
+    def __init__(self,X, y,learning_rate=0.0001, n_iters=10000):
         self.learning_rate = learning_rate
         self.n_iters = n_iters
         self.weights = None
         self.bias = None
+        self.X = X
+        self.y = y
+        self.y_pred = None
 
-    def fit(self, X, y):
-        n_samples, n_features = X.shape
+    def fit(self):
+        n_samples, n_features = self.X.shape
 
         # init parameters
         self.weights = np.zeros(n_features)
@@ -16,11 +19,11 @@ class LinearRegression:
 
         # gradient descent
         for _ in range(self.n_iters):
-            y_pred = np.dot(X, self.weights) + self.bias
+            y_pred = np.dot(self.X, self.weights) + self.bias
             
             # compute gradient decent
-            dw = (1 / n_samples) * np.dot(X.T, (y_pred - y))
-            db = (1 / n_samples) * np.sum(y_pred - y)
+            dw = (1 / n_samples) * np.dot(self.X.T, (y_pred - self.y))
+            db = (1 / n_samples) * np.sum(y_pred - self.y)
 
             # update parameters
             self.weights -= self.learning_rate * dw
@@ -29,8 +32,8 @@ class LinearRegression:
         
 
     def predict(self, X):
-        y_pred = np.dot(X, self.weights) + self.bias
-        return y_pred
+        y_predict = np.dot(X, self.weights) + self.bias
+        return y_predict
     
     def mae(self, y, y_pred):
         total = 0
